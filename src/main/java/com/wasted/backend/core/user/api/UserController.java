@@ -21,10 +21,10 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @PostMapping("/{name}")
-    public User saveUser(@PathVariable("name") String name) {
-        return userRepository.save(User.builder().name(name).build());
-    }
+//    @PostMapping("/{name}")
+//    public User saveUser(@PathVariable("name") String name) {
+//        return userRepository.save(User.builder().name(name).build());
+//    }
 
     @GetMapping("/all")
     public List<User> getAllUsers() {

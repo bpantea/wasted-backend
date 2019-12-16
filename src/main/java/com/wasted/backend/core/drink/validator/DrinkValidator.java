@@ -13,7 +13,7 @@ public class DrinkValidator {
             validationResult.rejectValue("id", "Id cannot be null");
         }
 
-        if (drink.getAlcoholPercentage() < 0 || drink.getAlcoholPercentage() > 100) {
+        if (drink.getAlcoholPercentage() == null || drink.getAlcoholPercentage() < 0 || drink.getAlcoholPercentage() > 100) {
             validationResult.rejectValue("percentage", "Alcohol percentage must be between 0 and 100");
         }
 
@@ -21,7 +21,7 @@ public class DrinkValidator {
             validationResult.rejectValue("brand", "Brand must not be null");
         }
 
-        if (drink.getQuantity() <= 0) {
+        if (drink.getQuantity() == null || drink.getQuantity() <= 0) {
             validationResult.rejectValue("quantity", "Quantity must be greater than 0");
         }
     }

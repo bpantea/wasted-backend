@@ -1,14 +1,17 @@
 package com.wasted.backend.core.drink.service;
 
 import com.wasted.backend.core.drink.domain.Drink;
+import com.wasted.backend.core.drink.exception.DrinkAlreadyPresentException;
 import com.wasted.backend.core.drink.exception.DrinkNotFoundException;
 import com.wasted.backend.core.drink.repository.DrinkRepository;
 import com.wasted.backend.core.drink.validator.DrinkValidator;
 import com.wasted.backend.shared.ValidationResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class DrinkServiceImpl implements DrinkService {
     private final DrinkRepository drinkRepository;
     private final DrinkValidator drinkValidator;
@@ -21,7 +24,11 @@ public class DrinkServiceImpl implements DrinkService {
     }
 
     @Override
-    public Drink add(Drink drink) {
+    public Drink add(Drink drink) throws DrinkAlreadyPresentException {
+        if (drinkRepository.findOneById(drink.getId()) != null) {
+            throw new DrinkAlreadyPresentException("Drink not found");
+        }
+
         ValidationResult validationResult = new ValidationResult();
         drinkValidator.validate(drink, validationResult);
         validationResult.rejectIfHasErrors();
@@ -61,6 +68,6 @@ public class DrinkServiceImpl implements DrinkService {
 
     @Override
     public List<Drink> getAll() {
-        return null;
+        return drinkRepository.findAll();
     }
 }

@@ -22,7 +22,7 @@ public class ValidationResult {
         return this.fieldErrors;
     }
 
-    public synchronized void rejectIfHasErrors() {
+    public void rejectIfHasErrors() {
         if (hasErrors()) {
             throw new RestValidationException(getErrors());
         }
