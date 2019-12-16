@@ -1,7 +1,7 @@
-package com.wasted.backend.user.api;
+package com.wasted.backend.core.user.api;
 
-import com.wasted.backend.user.domain.User;
-import com.wasted.backend.user.repository.UserRepository;
+import com.wasted.backend.core.user.domain.User;
+import com.wasted.backend.core.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

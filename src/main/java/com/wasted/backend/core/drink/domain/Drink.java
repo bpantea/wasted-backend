@@ -1,4 +1,4 @@
-package com.wasted.backend.user.domain;
+package com.wasted.backend.core.drink.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,19 +7,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+@Builder
+public class Drink {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String name;
+    private String id;
+    private Double quantity;
+    private String brand;
+    private String model;
+    private Double alcoholPercentage;
 }
