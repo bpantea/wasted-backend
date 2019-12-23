@@ -1,4 +1,6 @@
-package com.wasted.backend.shared;
+package com.wasted.backend.shared.entities;
+
+import com.wasted.backend.shared.exceptions.ValidationException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,7 @@ public class ValidationResult {
 
     public void rejectIfHasErrors() {
         if (hasErrors()) {
-            throw new RestValidationException(getErrors());
+            throw new ValidationException(getErrors());
         }
     }
 }

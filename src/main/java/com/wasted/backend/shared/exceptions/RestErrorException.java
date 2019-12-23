@@ -1,4 +1,4 @@
-package com.wasted.backend.shared;
+package com.wasted.backend.shared.exceptions;
 
 public class RestErrorException extends RuntimeException {
 

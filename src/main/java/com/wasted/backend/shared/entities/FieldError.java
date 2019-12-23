@@ -1,4 +1,4 @@
-package com.wasted.backend.shared;
+package com.wasted.backend.shared.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

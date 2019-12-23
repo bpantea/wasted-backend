@@ -1,7 +1,7 @@
 package com.wasted.backend.core.drink.validator;
 
 import com.wasted.backend.core.drink.domain.Drink;
-import com.wasted.backend.shared.ValidationResult;
+import com.wasted.backend.shared.entities.ValidationResult;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 

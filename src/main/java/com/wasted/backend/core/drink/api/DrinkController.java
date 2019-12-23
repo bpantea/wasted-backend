@@ -4,6 +4,7 @@ import com.wasted.backend.core.drink.domain.Drink;
 import com.wasted.backend.core.drink.exception.DrinkAlreadyPresentException;
 import com.wasted.backend.core.drink.exception.DrinkNotFoundException;
 import com.wasted.backend.core.drink.service.DrinkService;
+import com.wasted.backend.shared.exceptions.RestErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,17 +42,25 @@ public class DrinkController {
         try {
             return drinkService.add(drink);
         } catch (DrinkAlreadyPresentException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new RestErrorException(e.getMessage());
         }
     }
 
     @PutMapping
-    public Drink updateDrink(@RequestBody Drink drink) throws DrinkNotFoundException {
-        return drinkService.update(drink);
+    public Drink updateDrink(@RequestBody Drink drink) {
+        try {
+            return drinkService.update(drink);
+        } catch (DrinkNotFoundException e) {
+            throw new RestErrorException(e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void removeDrink(@PathVariable("id") String drinkId) throws DrinkNotFoundException {
-        drinkService.remove(drinkId);
+    public void removeDrink(@PathVariable("id") String drinkId) {
+        try {
+            drinkService.remove(drinkId);
+        } catch (DrinkNotFoundException e) {
+            throw new RestErrorException(e.getMessage());
+        }
     }
 }

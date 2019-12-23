@@ -5,7 +5,7 @@ import com.wasted.backend.core.drink.exception.DrinkAlreadyPresentException;
 import com.wasted.backend.core.drink.exception.DrinkNotFoundException;
 import com.wasted.backend.core.drink.repository.DrinkRepository;
 import com.wasted.backend.core.drink.validator.DrinkValidator;
-import com.wasted.backend.shared.ValidationResult;
+import com.wasted.backend.shared.entities.ValidationResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

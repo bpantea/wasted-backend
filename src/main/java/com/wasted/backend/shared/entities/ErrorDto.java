@@ -1,10 +1,10 @@
-package com.wasted.backend.shared;
+package com.wasted.backend.shared.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ErrorMessageDTO {
+public class ErrorDto {
     private String message;
 }
