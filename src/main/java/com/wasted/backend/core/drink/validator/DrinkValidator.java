@@ -13,8 +13,8 @@ public class DrinkValidator {
             validationResult.rejectValue("id", "Id cannot be null");
         }
 
-        if (drink.getAlcoholPercentage() == null || drink.getAlcoholPercentage() < 0 || drink.getAlcoholPercentage() > 100) {
-            validationResult.rejectValue("percentage", "Alcohol percentage must be between 0 and 100");
+        if (drink.getAlcoholQuantity() == null || drink.getAlcoholQuantity() < 0 || drink.getAlcoholQuantity() > drink.getQuantity()) {
+            validationResult.rejectValue("alcohol", "Alcohol quantity must be between 0 and drink quantity");
         }
 
         if (drink.getBrand() == null || drink.getBrand().equals(Strings.EMPTY)) {

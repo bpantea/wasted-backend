@@ -21,5 +21,5 @@ public class Drink {
     private Double quantity;
     private String brand;
     private String model;
-    private Double alcoholPercentage;
+    private Double alcoholQuantity;
 }
