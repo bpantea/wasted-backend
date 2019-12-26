@@ -26,5 +26,6 @@ public abstract class ConsumptionConverter {
 
         Double factor = consumptionDto.getQuantity() / consumption.getDrink().getQuantity();
         consumption.setAlcoholQuantity(factor * consumption.getDrink().getAlcoholQuantity());
+        consumption.setKcal(factor * consumption.getDrink().getKcal());
     }
 }

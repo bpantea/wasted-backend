@@ -24,5 +24,9 @@ public class DrinkValidator {
         if (drink.getQuantity() == null || drink.getQuantity() <= 0) {
             validationResult.rejectValue("quantity", "Quantity must be greater than 0");
         }
+
+        if (drink.getKcal() == null || drink.getKcal() < 0) {
+            validationResult.rejectValue("kcal", "Kcal must be greater or equal to 0");
+        }
     }
 }

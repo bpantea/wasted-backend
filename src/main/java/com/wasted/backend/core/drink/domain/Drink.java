@@ -22,4 +22,5 @@ public class Drink {
     private String brand;
     private String model;
     private Double alcoholQuantity;
+    private Double kcal;
 }

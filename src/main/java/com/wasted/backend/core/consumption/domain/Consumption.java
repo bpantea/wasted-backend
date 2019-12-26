@@ -31,4 +31,5 @@ public class Consumption {
     private Date date;
     private Double quantity;
     private Double alcoholQuantity;
+    private Double kcal;
 }

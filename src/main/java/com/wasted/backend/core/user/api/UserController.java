@@ -4,8 +4,6 @@ import com.wasted.backend.core.user.domain.User;
 import com.wasted.backend.core.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,11 +18,6 @@ public class UserController {
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
-//    @PostMapping("/{name}")
-//    public User saveUser(@PathVariable("name") String name) {
-//        return userRepository.save(User.builder().name(name).build());
-//    }
 
     @GetMapping("/all")
     public List<User> getAllUsers() {
