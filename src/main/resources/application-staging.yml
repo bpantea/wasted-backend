@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: jdbc:mysql://eu-cdbr-west-02.cleardb.net:3306/heroku_715ff9c48e5280c?reconnect=true
+    username: bdb43e90f473b0
+    password: 298e4fca
