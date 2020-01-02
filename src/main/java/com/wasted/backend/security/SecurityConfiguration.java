@@ -36,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                     .authenticated()
                 .and().logout().logoutSuccessUrl("/").permitAll()
-                .and().oauth2Login().successHandler(loginSuccessHandler()).tokenEndpoint();
+                .and().oauth2Login().successHandler(loginSuccessHandler()).defaultSuccessUrl("/");
 
         // disable redirects after access failed
         http.exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
