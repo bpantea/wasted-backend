@@ -13,7 +13,7 @@ import lombok.Setter;
 @Builder
 public class ConsumptionDto {
     private Long id;
-    private Long userId;
+    private String userId;
     private String drinkId;
     private Double quantity;
 }

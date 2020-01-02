@@ -6,6 +6,17 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  profiles:
+    active: google
+  main:
+    allow-bean-definition-overriding: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 856161952558-ql5a7e0a47k5bmoivgs444vlnqrkrsma.apps.googleusercontent.com
+            client-secret: o0IVJId6hFJ2lexgFfPIy6I0
 
 server:
   port: 8080
