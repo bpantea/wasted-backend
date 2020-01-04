@@ -16,7 +16,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/",
             "/login**",
             "/error**",
-            "/oauth2/**"
+            "/oauth2/**",
+            "/api/user/ unauthenticated"
     };
 
     @Autowired

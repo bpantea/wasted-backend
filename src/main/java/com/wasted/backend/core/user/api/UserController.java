@@ -34,4 +34,9 @@ public class UserController {
     public Principal getPrincipal(Principal principal) {
         return principal;
     }
+
+    @GetMapping("/unauthenticated")
+    public String getUnauthenticated() {
+        return "Hello, World!";
+    }
 }
