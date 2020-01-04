@@ -1,16 +1,22 @@
 package com.wasted.backend.security;
 
+import com.wasted.backend.core.user.repository.UserRepository;
 import com.wasted.backend.core.user.service.UserService;
+import com.wasted.backend.core.user.service.converter.UserConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 
 import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final UserService userService;
+    private final UserRepository userRepository;
+    private final UserConverter userConverter;
 
     private final String[] unauthorizedUrls = new String[]{
             "/",
@@ -21,8 +27,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     };
 
     @Autowired
-    public SecurityConfiguration(UserService userService) {
+    public SecurityConfiguration(final UserService userService,
+                                 final UserRepository userRepository,
+                                 final UserConverter userConverter) {
         this.userService = userService;
+        this.userRepository = userRepository;
+        this.userConverter = userConverter;
     }
 
     @Override
@@ -32,12 +42,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         // add oauth2 check for every request
         http.authorizeRequests()
-                    .antMatchers(unauthorizedUrls)
-                    .permitAll()
+                .antMatchers(unauthorizedUrls)
+                .permitAll()
                 .anyRequest()
-                    .authenticated()
-                .and().logout().logoutSuccessUrl("/").permitAll()
-                .and().oauth2Login().successHandler(loginSuccessHandler()).defaultSuccessUrl("/");
+                .authenticated()
+                //.and().logout().logoutSuccessUrl("/").permitAll()
+                .and()
+                .oauth2Login()
+                    .userInfoEndpoint()
+                    .oidcUserService(oidcUserService())
+                    .and().defaultSuccessUrl("/");
 
         // disable redirects after access failed
         http.exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
@@ -50,5 +64,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private LoginSuccessHandler loginSuccessHandler() {
         return new LoginSuccessHandler(userService);
+    }
+
+    @Bean
+    public OidcUserService oidcUserService() {
+        return new CustomOidcUserService(userRepository, userConverter);
     }
 }
