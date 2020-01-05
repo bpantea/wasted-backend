@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
-
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
 
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -37,37 +37,33 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        http.cors().disable();
-        http.csrf().disable();
-
-        // add oauth2 check for every request
-        http.authorizeRequests()
-                .antMatchers(unauthorizedUrls)
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                //.and().logout().logoutSuccessUrl("/").permitAll()
-                .and()
-                .oauth2Login()
-                    .userInfoEndpoint()
-                    .oidcUserService(oidcUserService())
-                    .and().defaultSuccessUrl("/");
+        http.cors().disable()
+            .csrf().disable()
+            .authorizeRequests()
+            .anyRequest()
+            .permitAll();
 
         // disable redirects after access failed
-        http.exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
-            if (authException != null) {
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().print("Unauthorizated....");
-            }
-        });
+//        http.exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
+//            if (authException != null) {
+//                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//                response.getWriter().print("Unauthorizated....");
+//            }
+//        });
     }
 
-    private LoginSuccessHandler loginSuccessHandler() {
-        return new LoginSuccessHandler(userService);
-    }
-
-    @Bean
-    public OidcUserService oidcUserService() {
-        return new CustomOidcUserService(userRepository, userConverter);
-    }
+//    @Bean
+//    public OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest>
+//    accessTokenResponseClient() {
+//        return new DefaultAuthorizationCodeTokenResponseClient();
+//    }
+//
+//    private LoginSuccessHandler loginSuccessHandler() {
+//        return new LoginSuccessHandler(userService);
+//    }
+//
+//    @Bean
+//    public OidcUserService oidcUserService() {
+//        return new CustomOidcUserService(userRepository, userConverter);
+//    }
 }

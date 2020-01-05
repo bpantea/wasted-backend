@@ -29,4 +29,14 @@ public class UserServiceImpl implements UserService {
         currentUser = userConverter.convert(user, currentUser);
         userRepository.save(currentUser);
     }
+
+    @Override
+    public User saveUser(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User getUser(String id) {
+        return userRepository.findOneById(id);
+    }
 }
