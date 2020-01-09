@@ -47,11 +47,11 @@ public class ConsumptionServiceImpl implements ConsumptionService {
     @Override
     public StatsDto getStatsForUser(String userID) throws UserNotFoundException {
         User user=userRepository.findOneById(userID);
-        if(user==null){
+        if (user == null) {
             throw new UserNotFoundException("User not found!");
         }
-        Date dateYesterday= DateUtils.addDays(new Date(),-1);
-        List<Consumption>list=this.consumptionRepository.findByUserIdAndDateAfter(userID,dateYesterday);
+        Date dateYesterday = DateUtils.addDays(new Date(),-1);
+        List<Consumption> list = this.consumptionRepository.findByUserIdAndDateAfter(userID,dateYesterday);
         return null;
     }
 }
