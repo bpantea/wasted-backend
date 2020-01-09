@@ -10,16 +10,49 @@ spring:
     active: google
   main:
     allow-bean-definition-overriding: true
-  security:
-    oauth2:
-      client:
-        registration:
-          facebook:
-            client-id: 2386373428340095
-            client-secret: ad09ea5301544f7172e10b5500c520ec
-          google:
-            client-id: 376972536110-e3ckka9ep06vhv33jq3o7vrnup177f4a.apps.googleusercontent.com
-            client-secret: 3oAVCfTLd0xD939w4E3OS3Q3
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          facebook:
+#            client-id: 2386373428340095
+#            client-secret: ad09ea5301544f7172e10b5500c520ec
+#          google:
+#            client-id: 376972536110-e3ckka9ep06vhv33jq3o7vrnup177f4a.apps.googleusercontent.com
+#            client-secret: 3oAVCfTLd0xD939w4E3OS3Q3
 
 server:
   port: 8080
+
+security:
+  oauth2:
+    client:
+      client-id: acme
+      client-secret: acmesecret
+      scope: read,write
+      auto-approve-scopes: '.*'
+
+facebook:
+  client:
+    clientId: 2386373428340095
+    clientSecret: ad09ea5301544f7172e10b5500c520ec
+    accessTokenUri: https://graph.facebook.com/oauth/access_token
+    userAuthorizationUri: https://www.facebook.com/dialog/oauth
+    tokenName: oauth_token
+    authenticationScheme: query
+    clientAuthenticationScheme: form
+  resource:
+    userInfoUri: https://graph.facebook.com/me
+
+google:
+  client:
+    clientId: 376972536110-e3ckka9ep06vhv33jq3o7vrnup177f4a.apps.googleusercontent.com
+    clientSecret: 3oAVCfTLd0xD939w4E3OS3Q3
+    accessTokenUri: https://www.googleapis.com/oauth2/v4/token
+    userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth
+    tokenName: authorization_code
+    scope:
+      - email
+      - profile
+  resource:
+    userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
