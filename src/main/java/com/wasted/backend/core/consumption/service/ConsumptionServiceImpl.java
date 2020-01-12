@@ -75,9 +75,15 @@ public class ConsumptionServiceImpl implements ConsumptionService {
     private Double getRationForGender(Gender gender){
         double r = 0.0;
         switch (gender){
-            case FEMALE: r = 0.55; break;
-            case MALE: r = 0.68; break;
-            case OTHER: r = (0.55+0.68)/2.0; break;
+            case FEMALE:
+                r = 0.55;
+                break;
+            case MALE:
+                r = 0.68;
+                break;
+            case OTHER:
+                r = (0.55 + 0.68) / 2.0;
+                break;
         }
         return r;
     }
