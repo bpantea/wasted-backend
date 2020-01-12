@@ -10,5 +10,5 @@ import lombok.*;
 public class StatsDto {
     private Double percentAlcohol;
     private Double absortionTime;
-    private Integer kcalsNumber;
+    private Double kcalsNumber;
 }

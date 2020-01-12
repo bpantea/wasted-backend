@@ -24,6 +24,6 @@ public class User {
     private String profilePicture;
 
     private Date birthday;
-    private Double height;
     private Double weight;
+    private String gender;
 }
