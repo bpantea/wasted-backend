@@ -7,6 +7,7 @@ import com.wasted.backend.core.consumption.repository.ConsumptionRepository;
 import com.wasted.backend.core.consumption.service.converter.ConsumptionConverter;
 import com.wasted.backend.core.consumption.validator.ConsumptionValidator;
 import com.wasted.backend.core.user.api.exceptions.UserNotFoundException;
+import com.wasted.backend.core.user.domain.Gender;
 import com.wasted.backend.core.user.domain.User;
 import com.wasted.backend.core.user.repository.UserRepository;
 import com.wasted.backend.shared.entities.ValidationResult;
@@ -58,12 +59,7 @@ public class ConsumptionServiceImpl implements ConsumptionService {
         }
 
         double userWeight = user.getWeight();
-        double r;
-        if(user.getGender().equals("male")){
-            r = 0.68;
-        }else{
-            r = 0.55;
-        }
+        double r = getRationForGender(user.getGender());
 
         StatsDto statsDto = new StatsDto();
         statsDto.setKcalsNumber(getSumOfKcal(consumptionLists));
@@ -74,6 +70,22 @@ public class ConsumptionServiceImpl implements ConsumptionService {
             statsDto.setAbsortionTime(45.0); //for males
         }
         return statsDto;
+    }
+
+    private Double getRationForGender(Gender gender){
+        double r = 0.0;
+        switch (gender){
+            case FEMALE:
+                r = 0.55;
+                break;
+            case MALE:
+                r = 0.68;
+                break;
+            case OTHER:
+                r = (0.55 + 0.68) / 2.0;
+                break;
+        }
+        return r;
     }
 
     private Double getSumOfKcal(List<Consumption> consumptionLists){
@@ -142,6 +154,4 @@ public class ConsumptionServiceImpl implements ConsumptionService {
         long nrSec = (maxDate.getTime() - minDate.getTime())/1000;
         return nrSec/3600;
     }
-
-
 }

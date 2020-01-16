@@ -25,5 +25,5 @@ public class User {
 
     private Date birthday;
     private Double weight;
-    private String gender;
+    private Gender gender;
 }
