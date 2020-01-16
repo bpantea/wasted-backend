@@ -4,6 +4,8 @@ import com.wasted.backend.core.user.api.dtos.GoogleUserDto;
 import com.wasted.backend.core.user.domain.User;
 import com.wasted.backend.core.user.repository.UserRepository;
 import com.wasted.backend.core.user.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
+    Logger logger = LoggerFactory.getLogger(UserController.class);
+
     private final UserRepository userRepository;
     private final UserService userService;
 
@@ -59,6 +63,7 @@ public class UserController {
 
     @PostMapping("/google-user")
     public User saveUser(@RequestBody GoogleUserDto user) {
+        logger.info("google-user");
         return userService.saveUser(user);
     }
 

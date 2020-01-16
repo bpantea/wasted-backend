@@ -4,11 +4,16 @@ import com.wasted.backend.core.user.api.dtos.GoogleUserDto;
 import com.wasted.backend.core.user.domain.User;
 import com.wasted.backend.core.user.repository.UserRepository;
 import com.wasted.backend.core.user.service.converter.UserConverter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
+    Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+    String log = "UserServiceImpl";
+
     private final UserRepository userRepository;
     private final UserConverter userConverter;
 
@@ -21,13 +26,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public synchronized User saveUser(GoogleUserDto user) {
+        logger.info("saveUser");
         User currentUser = userRepository.findOneById(user.getId());
         if (currentUser == null) {
             currentUser = new User();
+            logger.info("user is null");
         }
-
+        logger.info("before convert");
+        logger.info("id user {}", user.getId());
         currentUser = userConverter.convert(user, currentUser);
-        return userRepository.save(currentUser);
+        logger.info("user converted");
+        try {
+            User savedUser = userRepository.save(currentUser);
+            logger.info("after save");
+            return savedUser;
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            return null;
+        }
     }
 
     @Override
