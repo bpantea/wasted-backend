@@ -4,7 +4,7 @@ import com.wasted.backend.core.user.api.dtos.GoogleUserDto;
 import com.wasted.backend.core.user.domain.User;
 
 public interface UserService {
-    void saveUser(GoogleUserDto user);
+    User saveUser(GoogleUserDto user);
 
     User saveUser(User user);
 

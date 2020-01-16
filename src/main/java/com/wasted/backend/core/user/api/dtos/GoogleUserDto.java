@@ -16,5 +16,4 @@ public class GoogleUserDto {
     private String displayName;
     private String email;
     private String profilePicture;
-    private String gender;
 }

@@ -1,5 +1,6 @@
 package com.wasted.backend.core.user.api;
 
+import com.wasted.backend.core.user.api.dtos.GoogleUserDto;
 import com.wasted.backend.core.user.domain.User;
 import com.wasted.backend.core.user.repository.UserRepository;
 import com.wasted.backend.core.user.service.UserService;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -50,10 +52,17 @@ public class UserController {
         return ResponseEntity.ok(map);
     }
 
-    @PostMapping
+    @PostMapping("/full-user")
     public User saveUser(User user) {
         return userService.saveUser(user);
     }
+
+    @PostMapping("/google-user")
+    public User saveUser(@RequestBody GoogleUserDto user) {
+        return userService.saveUser(user);
+    }
+
+    // todo id token login maybe?
 
     @GetMapping("/get/{id}")
     public User getUser(@PathVariable("id") String id) {

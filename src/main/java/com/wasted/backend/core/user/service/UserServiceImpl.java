@@ -20,14 +20,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public synchronized void saveUser(GoogleUserDto user) {
+    public synchronized User saveUser(GoogleUserDto user) {
         User currentUser = userRepository.findOneById(user.getId());
         if (currentUser == null) {
             currentUser = new User();
         }
 
         currentUser = userConverter.convert(user, currentUser);
-        userRepository.save(currentUser);
+        return userRepository.save(currentUser);
     }
 
     @Override
