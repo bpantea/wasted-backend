@@ -1,16 +1,16 @@
 package com.wasted.backend.core.drink.api;
 
 import com.wasted.backend.core.drink.domain.Drink;
-import com.wasted.backend.core.drink.exception.DrinkAlreadyPresentException;
 import com.wasted.backend.core.drink.exception.DrinkNotFoundException;
 import com.wasted.backend.core.drink.service.DrinkService;
 import com.wasted.backend.shared.exceptions.RestErrorException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +21,8 @@ import java.util.List;
 @RequestMapping("/api/drink")
 public class DrinkController {
     private final DrinkService drinkService;
+    Logger logger = LoggerFactory.getLogger(DrinkController.class);
+
 
     @Autowired
     public DrinkController(final DrinkService drinkService) {
@@ -29,6 +31,7 @@ public class DrinkController {
 
     @GetMapping("/getOne/{id}")
     public Drink getDrink(@PathVariable("id") String drinkId) {
+        logger.info("in get drink");
         return drinkService.get(drinkId);
     }
 
