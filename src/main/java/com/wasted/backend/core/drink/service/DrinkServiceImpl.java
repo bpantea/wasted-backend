@@ -38,7 +38,8 @@ public class DrinkServiceImpl implements DrinkService {
                 .build();
 
         Double percent = drink.getAlcoholQuantity();
-        Double alcoholQuantity = percent / 100 * drink.getQuantity();
+        Double alcoholQuantity = (percent / 100.0) * drink.getQuantity();
+        logger.info("percent {}, alcoholQuantity {}", percent, alcoholQuantity);
         realDrink.setAlcoholQuantity(alcoholQuantity);
         ValidationResult validationResult = new ValidationResult();
         drinkValidator.validate(realDrink, validationResult);
@@ -73,7 +74,8 @@ public class DrinkServiceImpl implements DrinkService {
                 .brand(drink.getBrand())
                 .quantity(drink.getQuantity())
                 .build();
-        drinkDto.setAlcoholQuantity(drink.getAlcoholQuantity() / drink.getQuantity() / 100.0);
+        drinkDto.setAlcoholQuantity(drink.getAlcoholQuantity() / drink.getQuantity() * 100.0);
+        logger.info("database alcohol {}, dto alcohol {}", drink.getAlcoholQuantity(), drinkDto.getAlcoholQuantity());
         return drinkDto;
     }
 
