@@ -58,10 +58,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User putExtraFields(String userId, ExtraFieldsUser user) {
+        logger.info("extra fields");
         User currentUser = userRepository.findOneById(userId);
         currentUser.setBirthday(user.getBirthday());
         currentUser.setGender(user.getGender());
         currentUser.setWeight(user.getWeight());
-        return userRepository.save(currentUser);
+        logger.info("extra fields {} {} {} {}", userId, user.getBirthday(), user.getGender(), user.getWeight());
+        User savedUser = userRepository.save(currentUser);
+        logger.info("user {}", savedUser);
+        return savedUser;
     }
 }

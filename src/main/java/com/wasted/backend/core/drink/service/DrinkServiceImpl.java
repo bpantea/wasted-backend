@@ -1,7 +1,6 @@
 package com.wasted.backend.core.drink.service;
 
 import com.wasted.backend.core.drink.domain.Drink;
-import com.wasted.backend.core.drink.exception.DrinkAlreadyPresentException;
 import com.wasted.backend.core.drink.exception.DrinkNotFoundException;
 import com.wasted.backend.core.drink.repository.DrinkRepository;
 import com.wasted.backend.core.drink.validator.DrinkValidator;
@@ -24,11 +23,7 @@ public class DrinkServiceImpl implements DrinkService {
     }
 
     @Override
-    public Drink add(Drink drink) throws DrinkAlreadyPresentException {
-        if (drinkRepository.findOneById(drink.getId()) != null) {
-            throw new DrinkAlreadyPresentException("Drink not found");
-        }
-
+    public Drink add(Drink drink) {
         ValidationResult validationResult = new ValidationResult();
         drinkValidator.validate(drink, validationResult);
         validationResult.rejectIfHasErrors();
@@ -45,25 +40,8 @@ public class DrinkServiceImpl implements DrinkService {
     }
 
     @Override
-    public Drink update(Drink drink) throws DrinkNotFoundException {
-        ValidationResult validationResult = new ValidationResult();
-        drinkValidator.validate(drink, validationResult);
-        validationResult.rejectIfHasErrors();
-
-        Drink oldDrink = drinkRepository.findOneById(drink.getId());
-        if (oldDrink == null) {
-            throw new DrinkNotFoundException("Drink not found");
-        }
-        return drinkRepository.save(drink);
-    }
-
-    @Override
-    public Drink get(String drinkId) throws DrinkNotFoundException {
-        Drink drink = drinkRepository.findOneById(drinkId);
-        if (drink == null) {
-            throw new DrinkNotFoundException("Drink not found");
-        }
-        return drink;
+    public Drink get(String drinkId) {
+        return drinkRepository.findOneById(drinkId);
     }
 
     @Override

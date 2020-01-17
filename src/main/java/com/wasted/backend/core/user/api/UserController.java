@@ -78,6 +78,7 @@ public class UserController {
 
     @PutMapping("/extra-fields/{id}")
     public User putExtraFields(@PathVariable("id") String userId, @RequestBody ExtraFieldsUser user) {
+        logger.info("extra fields");
         return userService.putExtraFields(userId, user);
     }
 }

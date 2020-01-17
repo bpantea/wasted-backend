@@ -28,7 +28,7 @@ public class DrinkController {
     }
 
     @GetMapping("/getOne/{id}")
-    public Drink getDrink(@PathVariable("id") String drinkId) throws DrinkNotFoundException {
+    public Drink getDrink(@PathVariable("id") String drinkId) {
         return drinkService.get(drinkId);
     }
 
@@ -39,20 +39,7 @@ public class DrinkController {
 
     @PostMapping
     public Drink addDrink(@RequestBody Drink drink) {
-        try {
-            return drinkService.add(drink);
-        } catch (DrinkAlreadyPresentException e) {
-            throw new RestErrorException(e.getMessage());
-        }
-    }
-
-    @PutMapping
-    public Drink updateDrink(@RequestBody Drink drink) {
-        try {
-            return drinkService.update(drink);
-        } catch (DrinkNotFoundException e) {
-            throw new RestErrorException(e.getMessage());
-        }
+        return drinkService.add(drink);
     }
 
     @DeleteMapping("/{id}")

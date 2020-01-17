@@ -26,4 +26,17 @@ public class User {
     private Date birthday;
     private Double weight;
     private Gender gender;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", displayName='" + displayName + '\'' +
+                ", email='" + email + '\'' +
+                ", profilePicture='" + profilePicture + '\'' +
+                ", birthday=" + birthday +
+                ", weight=" + weight +
+                ", gender=" + gender +
+                '}';
+    }
 }
