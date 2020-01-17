@@ -29,7 +29,7 @@ public class DrinkController {
         this.drinkService = drinkService;
     }
 
-    @GetMapping("/getO/api/drinkne/{id}")
+    @GetMapping("/getO/api/drinkOne/{id}")
     public DrinkDto getDrink(@PathVariable("id") String drinkId) {
         logger.info("in get drink");
         return drinkService.get(drinkId);
