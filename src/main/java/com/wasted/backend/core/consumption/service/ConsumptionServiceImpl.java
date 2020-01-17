@@ -12,6 +12,8 @@ import com.wasted.backend.core.user.domain.User;
 import com.wasted.backend.core.user.repository.UserRepository;
 import com.wasted.backend.shared.entities.ValidationResult;
 import org.apache.commons.lang3.time.DateUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ import java.util.List;
 
 @Service
 public class ConsumptionServiceImpl implements ConsumptionService {
+    Logger logger = LoggerFactory.getLogger(ConsumptionServiceImpl.class);
+
     private final ConsumptionRepository consumptionRepository;
     private final ConsumptionConverter consumptionConverter;
     private final ConsumptionValidator consumptionValidator;
@@ -47,19 +51,22 @@ public class ConsumptionServiceImpl implements ConsumptionService {
 
     @Override
     public StatsDto getStatsForUser(String userID) throws UserNotFoundException {
+        logger.info("get stats");
         User user = userRepository.findOneById(userID);
         if (user == null) {
+            logger.info("user not found");
             throw new UserNotFoundException("User not found!");
         }
         Date dateYesterday = DateUtils.addDays(new Date(),-1);
         List<Consumption> consumptionLists = this.consumptionRepository.findByUserIdAndDateAfter(userID,dateYesterday);
-        if (consumptionLists.size() == 0) {
+        if (consumptionLists.isEmpty()) {
+            logger.info("empty list");
             return new StatsDto(0.0,0.0,0.0);
-            //this user havent consumend anything in the last 24 hours
         }
 
         double userWeight = user.getWeight();
         double r = getRationForGender(user.getGender());
+        logger.info("ratio {}", r);
 
         StatsDto statsDto = new StatsDto();
         statsDto.setKcalsNumber(getSumOfKcal(consumptionLists));
@@ -69,6 +76,8 @@ public class ConsumptionServiceImpl implements ConsumptionService {
         }else{
             statsDto.setAbsortionTime(45.0); //for males
         }
+        logger.info("Number of drinks {}, absorption time {}, kcals {}, percent {}",
+                consumptionLists.size(), statsDto.getAbsortionTime(), statsDto.getKcalsNumber(), statsDto.getPercentAlcohol());
         return statsDto;
     }
 
