@@ -29,19 +29,14 @@ public class DrinkController {
         this.drinkService = drinkService;
     }
 
-    @GetMapping("/getOne/{id}")
-    public Drink getDrink(@PathVariable("id") String drinkId) {
+    @GetMapping("/getO/api/drinkne/{id}")
+    public DrinkDto getDrink(@PathVariable("id") String drinkId) {
         logger.info("in get drink");
         return drinkService.get(drinkId);
     }
 
-    @GetMapping("/all")
-    public List<Drink> getDrinks() {
-        return drinkService.getAll();
-    }
-
     @PostMapping
-    public Drink addDrink(@RequestBody Drink drink) {
+    public DrinkDto addDrink(@RequestBody DrinkDto drink) {
         return drinkService.add(drink);
     }
 

@@ -1,5 +1,6 @@
 package com.wasted.backend.core.drink.service;
 
+import com.wasted.backend.core.drink.api.DrinkDto;
 import com.wasted.backend.core.drink.domain.Drink;
 import com.wasted.backend.core.drink.exception.DrinkNotFoundException;
 import com.wasted.backend.core.drink.repository.DrinkRepository;
@@ -26,11 +27,24 @@ public class DrinkServiceImpl implements DrinkService {
     }
 
     @Override
-    public Drink add(Drink drink) {
+    public DrinkDto add(DrinkDto drink) {
+        Drink realDrink = Drink.builder()
+                .id(drink.getId())
+                .alcoholQuantity(drink.getAlcoholQuantity())
+                .kcal(drink.getKcal())
+                .model(drink.getModel())
+                .brand(drink.getBrand())
+                .quantity(drink.getQuantity())
+                .build();
+
+        Double percent = drink.getAlcoholQuantity();
+        Double alcoholQuantity = percent / 100 * drink.getQuantity();
+        realDrink.setAlcoholQuantity(alcoholQuantity);
         ValidationResult validationResult = new ValidationResult();
-        drinkValidator.validate(drink, validationResult);
+        drinkValidator.validate(realDrink, validationResult);
         validationResult.rejectIfHasErrors();
-        return drinkRepository.save(drink);
+        drinkRepository.save(realDrink);
+        return drink;
     }
 
     @Override
@@ -43,14 +57,24 @@ public class DrinkServiceImpl implements DrinkService {
     }
 
     @Override
-    public Drink get(String drinkId) {
+    public DrinkDto get(String drinkId) {
         logger.info("in get drink");
         Drink drink = drinkRepository.findOneById(drinkId);
         logger.info("Drink {}", drink);
         if (drink == null) {
             throw new RuntimeException();
         }
-        return drink;
+
+        DrinkDto drinkDto = DrinkDto.builder()
+                .id(drink.getId())
+                .alcoholQuantity(drink.getAlcoholQuantity())
+                .kcal(drink.getKcal())
+                .model(drink.getModel())
+                .brand(drink.getBrand())
+                .quantity(drink.getQuantity())
+                .build();
+        drinkDto.setAlcoholQuantity(drink.getAlcoholQuantity() / drink.getQuantity() / 100.0);
+        return drinkDto;
     }
 
     @Override
