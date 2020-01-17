@@ -1,5 +1,6 @@
 package com.wasted.backend.core.user.service;
 
+import com.wasted.backend.core.user.api.dtos.ExtraFieldsUser;
 import com.wasted.backend.core.user.api.dtos.GoogleUserDto;
 import com.wasted.backend.core.user.domain.User;
 import com.wasted.backend.core.user.repository.UserRepository;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
     Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
-    String log = "UserServiceImpl";
 
     private final UserRepository userRepository;
     private final UserConverter userConverter;
@@ -54,5 +54,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(String id) {
         return userRepository.findOneById(id);
+    }
+
+    @Override
+    public User putExtraFields(String userId, ExtraFieldsUser user) {
+        User currentUser = userRepository.findOneById(userId);
+        currentUser.setBirthday(user.getBirthday());
+        currentUser.setGender(user.getGender());
+        currentUser.setWeight(user.getWeight());
+        return userRepository.save(currentUser);
     }
 }

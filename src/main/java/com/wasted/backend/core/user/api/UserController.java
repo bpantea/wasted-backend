@@ -1,5 +1,6 @@
 package com.wasted.backend.core.user.api;
 
+import com.wasted.backend.core.user.api.dtos.ExtraFieldsUser;
 import com.wasted.backend.core.user.api.dtos.GoogleUserDto;
 import com.wasted.backend.core.user.domain.User;
 import com.wasted.backend.core.user.repository.UserRepository;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -72,5 +74,10 @@ public class UserController {
     @GetMapping("/get/{id}")
     public User getUser(@PathVariable("id") String id) {
         return userService.getUser(id);
+    }
+
+    @PutMapping("/extra-fields/{id}")
+    public User putExtraFields(@PathVariable("id") String userId, @RequestBody ExtraFieldsUser user) {
+        return userService.putExtraFields(userId, user);
     }
 }
