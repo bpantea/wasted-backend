@@ -2,6 +2,7 @@ package com.wasted.backend.core.user.service;
 
 import com.wasted.backend.core.user.api.dtos.ExtraFieldsUser;
 import com.wasted.backend.core.user.api.dtos.GoogleUserDto;
+import com.wasted.backend.core.user.domain.Gender;
 import com.wasted.backend.core.user.domain.User;
 import com.wasted.backend.core.user.repository.UserRepository;
 import com.wasted.backend.core.user.service.converter.UserConverter;
@@ -9,6 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Calendar;
+import java.util.Date;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -37,6 +41,16 @@ public class UserServiceImpl implements UserService {
         currentUser = userConverter.convert(user, currentUser);
         logger.info("user converted");
         try {
+            if (currentUser.getWeight() == null) {
+                currentUser.setWeight(70.0);
+            }
+            if (currentUser.getGender() == null) {
+                currentUser.setGender(Gender.OTHER);
+            }
+            if (currentUser.getBirthday() == null) {
+                currentUser.setBirthday(new Date(0));
+                logger.info("default birthday {}", currentUser.getBirthday());
+            }
             User savedUser = userRepository.save(currentUser);
             logger.info("after save");
             return savedUser;
