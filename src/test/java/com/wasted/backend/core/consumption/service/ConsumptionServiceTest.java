@@ -40,10 +40,10 @@ public class ConsumptionServiceTest {
         userRepository.save(user);
         Drink drink = Drink.builder().id("1").build();
         drinkRepository.save(drink);
-        Consumption consumption1 = Consumption.builder().id(1L).kcal(100.0).user(user).drink(drink).alcoholQuantity(10.0).date(new Date()).build();
-        Consumption consumption2 = Consumption.builder().id(2L).kcal(100.0).user(user).drink(drink).alcoholQuantity(10.0).date(new Date()).build();
-        Consumption consumption3 = Consumption.builder().id(3L).kcal(100.0).user(user).drink(drink).alcoholQuantity(10.0).date(new Date()).build();
-        Consumption consumption4 = Consumption.builder().id(4L).kcal(100.0).user(user).drink(drink).alcoholQuantity(10.0).date(new Date()).build();
+        Consumption consumption1 = Consumption.builder().id(1L).kcal(100.0).user(user).drink(drink).alcoholQuantity(50.0).date(DateUtils.addHours(new Date(), -20)).build();
+        Consumption consumption2 = Consumption.builder().id(2L).kcal(100.0).user(user).drink(drink).alcoholQuantity(50.0).date(DateUtils.addHours(new Date(), -20)).build();
+        Consumption consumption3 = Consumption.builder().id(3L).kcal(100.0).user(user).drink(drink).alcoholQuantity(50.0).date(DateUtils.addHours(new Date(), -20)).build();
+        Consumption consumption4 = Consumption.builder().id(4L).kcal(100.0).user(user).drink(drink).alcoholQuantity(50.0).date(DateUtils.addHours(new Date(), -1)).build();
         consumption1 = consumptionRepository.save(consumption1);
         consumption2 = consumptionRepository.save(consumption2);
         consumption3 = consumptionRepository.save(consumption3);

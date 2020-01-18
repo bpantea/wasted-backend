@@ -71,11 +71,7 @@ public class ConsumptionServiceImpl implements ConsumptionService {
         StatsDto statsDto = new StatsDto();
         statsDto.setKcalsNumber(getSumOfKcal(consumptionLists));
         statsDto.setPercentAlcohol(getBloodAlcoholPercentInBlood(consumptionLists,userWeight,r));
-        if (r == 0.55) {
-            statsDto.setAbsortionTime(30.0); //the avg of absorption time for females from last drink
-        }else{
-            statsDto.setAbsortionTime(45.0); //for males
-        }
+        statsDto.setAbsortionTime(statsDto.getPercentAlcohol() / 0.015);
         logger.info("Number of drinks {}, absorption time {}, kcals {}, percent {}",
                 consumptionLists.size(), statsDto.getAbsortionTime(), statsDto.getKcalsNumber(), statsDto.getPercentAlcohol());
         return statsDto;
@@ -111,10 +107,25 @@ public class ConsumptionServiceImpl implements ConsumptionService {
     * docs: https://www.wikihow.com/Calculate-Blood-Alcohol-Content-(Widmark-Formula)
     * */
     private Double getBloodAlcoholPercentInBlood(List<Consumption>consumptionList,Double userWeight,Double r){
-        double bac1 = BACAfterElapsedTime(consumptionList,0.0,5.0,userWeight,r);
-        double bac2 = BACAfterElapsedTime(consumptionList,5.1,12.0,userWeight,r);
-        double bac3 = BACAfterElapsedTime(consumptionList,12.01,100.0,userWeight,r);
-        return bac1 + bac2 + bac3;
+        double bac = 0;
+        Date datt = DateUtils.addDays(new Date(), -1);
+        long dat = new Date().getTime() - 86400000;
+        long no = new Date().getTime();
+        double aux;
+        double au;
+        for(Consumption c : consumptionList){
+            System.out.println(c.getAlcoholQuantity());
+            aux = (c.getAlcoholQuantity() / (userWeight*1000 * r)) * 100;
+            au = (c.getDate().getTime() - datt.getTime()) / (60*60 * 1000);
+            bac = bac - au*0.015;
+            if(bac < 0) bac = 0;
+            bac += aux;
+            datt = c.getDate();
+        }
+        au = (new Date().getTime() - datt.getTime()) / (60*60 * 1000);
+        bac = bac - au * 0.015;
+        if(bac < 0) bac = 0;
+        return bac;
     }
 
     /*
